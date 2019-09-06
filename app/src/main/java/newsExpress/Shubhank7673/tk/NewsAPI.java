@@ -12,13 +12,15 @@ public class NewsAPI {
     private static final String key2 = "AIzaSyAVgAw1TDa-mZzcr18-3FKXAKAXEIyubM0";
     private static String url = "http://newsapi.org/v2/top-headlines/";// + country + "&apiKey="+key;
     private static String url2 = "https://www.googleapis.com/blogger/v3/blogs/394040623688436172/posts/";
+    private static String url3 = "https://newsapi.org/v2/everything/";;
+    private static String sources = "https://newsapi.org/v2/sources?country=in&apiKey=9208762db6a64b7891607b6f769ffbad";
 
     public static newsDataFetch newsDataFetchObj = null;
 
     public static newsDataFetch getService() {
         if (newsDataFetchObj == null) {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(url2)
+                    .baseUrl(url)
                     //.client(getUnsafeOkHttpClient().build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -30,9 +32,9 @@ public class NewsAPI {
 
 
     public interface newsDataFetch {
-        /*@GET("?country=in&apiKey="+key)
-        Call<NewsList> getNewsList();*/
-        @GET("?key="+key2)
+        @GET("?country=in&apiKey="+key)
         Call<NewsList> getNewsList();
+        /*@GET("?domains=wsj.com,nytimes.com&sortBy=popularity/&apiKey="+key)
+        Call<NewsList> getNewsList();*/
     }
 }

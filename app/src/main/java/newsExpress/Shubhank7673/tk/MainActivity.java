@@ -5,8 +5,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -24,10 +28,17 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    RecyclerView recyclerView;
+    TextView testText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        recyclerView = findViewById(R.id.newsList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //testText = findViewById(R.id.testText);
+
         setUpToolbar();
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -63,9 +74,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<NewsList> call, Response<NewsList> response) {
                 NewsList list = response.body();
-                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                //testText.setText(list.getArticles().get(0).getTitle());
+                //Toast.makeText(MainActivity.this, list.getArticles().get(0).getAuthor(), Toast.LENGTH_SHORT).show();
+                recyclerView.setAdapter(new newsAdapter(MainActivity.this,list.getArticles()));
+                //Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onFailure(Call<NewsList> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();

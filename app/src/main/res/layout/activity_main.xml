@@ -20,16 +20,12 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="News Express Main Activity"
-            android:textSize="20dp"
-            />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
