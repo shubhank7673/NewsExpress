@@ -17,12 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            >
 
             <ProgressBar
                 android:id="@+id/progressBarMain"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="right"
                 android:layout_marginEnd="24dp"
                 android:indeterminate="true"
@@ -34,8 +36,8 @@
 
             <ImageView
                 android:id="@+id/reload"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:layout_gravity="right"
                 android:layout_marginEnd="24dp"
                 android:src="@drawable/reload"
