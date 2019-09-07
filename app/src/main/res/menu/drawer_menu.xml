@@ -9,6 +9,10 @@
             android:title="home"
             ></item>
         <item
+            android:id="@+id/nav_topHeadlines"
+            android:title="Top headlines"
+            ></item>
+        <item
             android:id="@+id/nav_saved"
             android:title="saved"></item
             >

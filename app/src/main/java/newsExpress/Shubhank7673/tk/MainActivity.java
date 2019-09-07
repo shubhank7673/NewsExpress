@@ -9,11 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Collections;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,16 +37,49 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     RecyclerView recyclerView;
     TextView testText;
+    ProgressBar progressBarMain;
+    ImageView reload;
+    int selected=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressBarMain = findViewById(R.id.progressBarMain);
         recyclerView = findViewById(R.id.newsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setUpToolbar();
+        getNewsData();
+        //hamburger = findViewById(R.id.hamburger);
+        drawerLayout = findViewById(R.id.drawer);
+        /*hamburger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });*/
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+        reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reload.setVisibility(View.GONE);
+                progressBarMain.setVisibility(View.VISIBLE);
+                getNewsData();
+            }
+        });
 
         //testText = findViewById(R.id.testText);
-
-        setUpToolbar();
+        //setUpToolbar();
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -47,19 +87,32 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId())
                 {
                     case R.id.nav_home:
-                        Toast.makeText(MainActivity.this, "Home clicked", Toast.LENGTH_SHORT).show();
+                        selected=0;
+                        drawerLayout.closeDrawer(Gravity.LEFT);
+                        reload.setVisibility(View.GONE);
+                        progressBarMain.setVisibility(View.VISIBLE);
+                        getNewsData();
+                        Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.nav_categories:
-                        Toast.makeText(MainActivity.this, "Categories clicked", Toast.LENGTH_SHORT).show();
+                    case R.id.nav_topHeadlines:
+                        selected=1;
+                        drawerLayout.closeDrawer(Gravity.LEFT);
+                        reload.setVisibility(View.GONE);
+                        progressBarMain.setVisibility(View.VISIBLE);
+                        getNewsData();
+                        Toast.makeText(MainActivity.this, "Top Headlines", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_saved:
+                        drawerLayout.closeDrawer(Gravity.LEFT);
                         break;
                 }
                 return false;
             }
         });
-        getNewsData();
     }
     private void setUpToolbar()
     {
+        reload = findViewById(R.id.reload);
         drawerLayout = findViewById(R.id.drawer);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,14 +122,19 @@ public class MainActivity extends AppCompatActivity {
     }
     private void getNewsData()
     {
-        Call<NewsList> newsListCall = NewsAPI.getService().getNewsList();
+        Call<NewsList> newsListCall = selected==0?NewsAPI.getService().getNewsList():NewsAPI.getService().getTopHeadlinesList();
         newsListCall.enqueue(new Callback<NewsList>() {
             @Override
             public void onResponse(Call<NewsList> call, Response<NewsList> response) {
                 NewsList list = response.body();
                 //testText.setText(list.getArticles().get(0).getTitle());
                 //Toast.makeText(MainActivity.this, list.getArticles().get(0).getAuthor(), Toast.LENGTH_SHORT).show();
-                recyclerView.setAdapter(new newsAdapter(MainActivity.this,list.getArticles()));
+                assert list != null;
+                List<Article>li = list.getArticles();
+                Collections.shuffle(li);
+                recyclerView.setAdapter(new newsAdapter(MainActivity.this,li));
+                progressBarMain.setVisibility(View.GONE);
+                reload.setVisibility(View.VISIBLE);
                 //Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
             @Override

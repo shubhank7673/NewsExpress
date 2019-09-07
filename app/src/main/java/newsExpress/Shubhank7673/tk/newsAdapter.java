@@ -2,6 +2,7 @@ package newsExpress.Shubhank7673.tk;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +37,18 @@ public class newsAdapter extends RecyclerView.Adapter<newsAdapter.newsViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull newsViewHolder holder, int position) {
-        Article article = articles.get(position);
+        final Article article = articles.get(position);
         holder.newsTitle.setText(article.getTitle());
         holder.newsDescription.setText(article.getDescription());
         Glide.with(context).load(article.getUrlToImage()).into(holder.newsImage);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,newsDetail.class);
+                intent.putExtra("url",article.getUrl());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
