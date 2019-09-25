@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 getNewsData();
-                swp.setRefreshing(false);
+                //swp.setRefreshing(false);
             }
         });
 
@@ -164,5 +164,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
+        swp.setRefreshing(false);
     }
 }
