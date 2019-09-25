@@ -5,4 +5,8 @@
     <color name="colorAccent">#ffffff</color>
     <color name="lightBlack">#2c2f33</color>
     <color name="sideDrawer">#2c2f33</color>
+    <color name="swipe1">#FDFF00</color>
+    <color name="swipe2">#00FF17</color>
+    <color name="swipe3">#FF5722</color>
+
 </resources>

@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,12 +40,24 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView testText;
     ProgressBar progressBarMain;
-    ImageView reload;
+    //ImageView reload;
+    SwipeRefreshLayout swp ;
     int selected=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        swp = findViewById(R.id.swipeToRefresh);
+        swp.setColorSchemeResources(R.color.colorPrimary);
+        swp.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getNewsData();
+                swp.setRefreshing(false);
+            }
+        });
+
         progressBarMain = findViewById(R.id.progressBarMain);
         recyclerView = findViewById(R.id.newsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -70,14 +83,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        reload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                reload.setVisibility(View.GONE);
-                progressBarMain.setVisibility(View.VISIBLE);
-                getNewsData();
-            }
-        });
+//        reload.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                reload.setVisibility(View.GONE);
+//                progressBarMain.setVisibility(View.VISIBLE);
+//                getNewsData();
+//            }
+//        });
 
         //testText = findViewById(R.id.testText);
         //setUpToolbar();
@@ -90,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         selected=0;
                         drawerLayout.closeDrawer(Gravity.LEFT);
-                        reload.setVisibility(View.GONE);
+                        //reload.setVisibility(View.GONE);
                         progressBarMain.setVisibility(View.VISIBLE);
                         getNewsData();
                         Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
@@ -98,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_topHeadlines:
                         selected=1;
                         drawerLayout.closeDrawer(Gravity.LEFT);
-                        reload.setVisibility(View.GONE);
+                        //reload.setVisibility(View.GONE);
                         progressBarMain.setVisibility(View.VISIBLE);
                         getNewsData();
                         Toast.makeText(MainActivity.this, "Top Headlines", Toast.LENGTH_SHORT).show();
@@ -109,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_country:
                         Intent intent = new Intent(MainActivity.this,Countries.class);
                         MainActivity.this.startActivity(intent);
+                        break;
+                    case R.id.nav_language:
+                        Intent languageIntent = new Intent(MainActivity.this,Languages.class);
+                        MainActivity.this.startActivity(languageIntent);
+                        break;
                 }
                 return false;
             }
@@ -116,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setUpToolbar()
     {
-        reload = findViewById(R.id.reload);
+        //reload = findViewById(R.id.reload);
         drawerLayout = findViewById(R.id.drawer);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -138,12 +156,12 @@ public class MainActivity extends AppCompatActivity {
                 Collections.shuffle(li);
                 recyclerView.setAdapter(new newsAdapter(MainActivity.this,li));
                 progressBarMain.setVisibility(View.GONE);
-                reload.setVisibility(View.VISIBLE);
+                //reload.setVisibility(View.VISIBLE);
                 //Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onFailure(Call<NewsList> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }

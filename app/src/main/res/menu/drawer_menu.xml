@@ -17,8 +17,8 @@
             android:title="saved"></item
             >
         <item
-            android:id="@+id/nav_categories"
-            android:title="categories"></item>
+            android:id="@+id/nav_spaces"
+            android:title="spaces"></item>
         <item
             android:id="@+id/nav_country"
             android:title="country"></item>

@@ -4,27 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Countries">
+    tools:context=".Countries"
+    android:layout_gravity="center_vertical"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextAppearance="@style/Toolbar.TitleText" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="164dp"
         android:layout_height="141dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/newsexpresslogo" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:srcCompat="@drawable/worldwide" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="164dp"
         android:layout_height="141dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/newsexpresslogo" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:srcCompat="@drawable/india" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -34,7 +45,7 @@
         android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:srcCompat="@drawable/newsexpresslogo" />
+        app:srcCompat="@drawable/usa" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -44,25 +55,31 @@
         android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:srcCompat="@drawable/newsexpresslogo" />
+        app:srcCompat="@drawable/china" />
 
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="164dp"
         android:layout_height="141dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:srcCompat="@drawable/newsexpresslogo" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/russia" />
 
     <ImageView
         android:id="@+id/imageView8"
         android:layout_width="164dp"
         android:layout_height="141dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="55dp"
         android:layout_marginEnd="28dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:srcCompat="@drawable/newsexpresslogo" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/japan" />
 </androidx.constraintlayout.widget.ConstraintLayout>
