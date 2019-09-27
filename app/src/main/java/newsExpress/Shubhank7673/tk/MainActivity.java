@@ -127,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
                         Intent languageIntent = new Intent(MainActivity.this,Languages.class);
                         MainActivity.this.startActivity(languageIntent);
                         break;
+                    case R.id.nav_spaces:
+                        Intent spacesIntent = new Intent(MainActivity.this,spaces.class);
+                        MainActivity.this.startActivity(spacesIntent);
+                        break;
                 }
                 return false;
             }
